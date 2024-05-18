@@ -69,5 +69,62 @@ public class AuthController {
         session.invalidate();
         return "redirect:/homepage";
     }
+    @PostMapping("/changePass")
+    private String changePass(@RequestParam String currentPassword,
+                              @RequestParam String newPassword,
+                              @RequestParam String confirmPassword, Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("User");
+        currentUser = userRepository.findById(currentUser.getId()).get();
+        if (!(passwordEncoder.matches(currentPassword, currentUser.getPassword()))) {
+            String exception = "Your current password is incorrect";
+            String currentPasswordIncorrect = "true";
+            String changePass = "true";
+
+            return "redirect:/profile?currentPasswordIncorrect=" + currentPasswordIncorrect + "&changePass=" + changePass + "&messageException=" + exception;
+        }
+        if (!(newPassword.equals(confirmPassword))) {
+            String exception = "Your passwords doesn't match";
+            String passwordsDontMatch = "true";
+            String changePass = "true";
+
+            return "redirect:/profile?passwordsDontMatch=" + passwordsDontMatch + "&changePass=" + changePass + "&messageException=" + exception;
+        }
+        try {
+            userService.updatePassword(currentUser.getUsername(), newPassword);
+
+        } catch (InvalidPasswordException e) {
+            String exception = e.getMessage();
+            String passwordsDontMatch = "true";
+            String changePass = "true";
+            return "redirect:/profile?passwordsDontMatch=" + passwordsDontMatch + "&changePass=" + changePass + "&messageException=" + exception;
+
+        }
+        String successfullyChanged = "true";
+
+        return "redirect:/profile?successfullyChanged=" + successfullyChanged;
+    }
+    @GetMapping("/changePass")
+    private String changePass(Model model, HttpSession session) {
+        User currentUser = (User) session.getAttribute("User");
+        model.addAttribute("user", userRepository.findById(currentUser.getId()).get());
+        String changePass = "true";
+        return "redirect:/profile?changePass=" + changePass;
+    }
+    @GetMapping("/profile")
+    private String profile(Model model, HttpSession session,
+                           @RequestParam(required = false) String changePass,
+                           @RequestParam(required = false) String successfullyChanged,
+                           @RequestParam(required = false) String passwordsDontMatch,
+                           @RequestParam(required = false) String messageException,
+                           @RequestParam(required = false) String currentPasswordIncorrect) {
+        User currentUser = (User) session.getAttribute("User");
+        model.addAttribute("user", userRepository.findById(currentUser.getId()).get());
+        model.addAttribute("changePass", changePass);
+        model.addAttribute("successfullyChanged", successfullyChanged);
+        model.addAttribute("message", messageException);
+        model.addAttribute("passwordsDontMatch", passwordsDontMatch);
+        model.addAttribute("currentPasswordIncorrect", currentPasswordIncorrect);
+        return "profile";
+    }
 
 }
