@@ -3,6 +3,9 @@ package com.finki.journalingapplication.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "userjournal")
 @Data
@@ -14,12 +17,17 @@ public class User {
     private String name;
     private String surname;
     private String password;
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Notes> listOfNotes;
+    @OneToMany(mappedBy = "user")
+    private List<ToDo> todos;
 
     public User(String name, String surname, String username, String password) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
+        listOfNotes=new ArrayList<>();
     }
 
     public User() {

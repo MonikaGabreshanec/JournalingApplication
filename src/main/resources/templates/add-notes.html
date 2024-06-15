@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Note</title>
+</head>
+<body>
+<h2 th:if="${note?.id}">Edit Note</h2>
+<h2 th:unless="${note?.id}">Add New Note</h2>
+<form th:action="@{ ${note != null} ? '/notes/' + ${note.id} : '/notes' }" th:object="${note}" method="post">
+    <label for="title">Title:</label><br>
+    <input type="text" th:value="${note?.title}" id="title" name="title" required><br><br>
+
+    <label for="description">Description:</label><br>
+    <textarea id="description" th:text="${note?.description}" name="description" required></textarea><br><br>
+
+    <input type="submit" value="Save">
+
+</form>
+<a href="/notes" >
+    <span>Go back</span>
+</a>
+</body>
+</html>
