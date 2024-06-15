@@ -33,7 +33,7 @@ body {
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out;
-    background-color: #fafbfe;
+    background-color: #f5f0e8;
 }
 
 #sidebar {
@@ -41,7 +41,7 @@ body {
     min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    background-color: #0e2238;
+    background-color: #808c6c;
     display: flex;
     flex-direction: column;
 }
@@ -99,7 +99,7 @@ a.sidebar-link {
 
 a.sidebar-link:hover {
     background-color: rgba(255, 255, 255, .075);
-    border-left: 3px solid #3b7ddd;
+    border-left: 3px solid #575f45;
 }
 
 .sidebar-item {
@@ -110,7 +110,7 @@ a.sidebar-link:hover {
     position: absolute;
     top: 0;
     left: 70px;
-    background-color: #0e2238;
+    background-color: #808c6c;
     padding: 0;
     min-width: 15rem;
     display: none;
@@ -140,4 +140,3 @@ a.sidebar-link:hover {
     transform: rotate(45deg);
     transition: all .2s ease-out;
 }
-
