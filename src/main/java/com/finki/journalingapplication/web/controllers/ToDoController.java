@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
@@ -30,6 +27,17 @@ public class ToDoController {
     public String addTodo(@RequestParam String title, HttpSession session, Model model) {
         User currentUser = (User) session.getAttribute("User");
         toDoService.save(title,currentUser);
+        return "redirect:/todos";
+    }
+    @PostMapping("/todos/{id}/complete")
+    public String complete(@PathVariable Long id) {
+        this.toDoService.markCompleted(id);
+        return "redirect:/todos";
+    }
+    @PostMapping("/delete-completed")
+    public String deleteCompletedTodos(HttpSession session) {
+        User currentUser = (User) session.getAttribute("User");
+        toDoService.deleteCompletedTodos(currentUser);
         return "redirect:/todos";
     }
 }

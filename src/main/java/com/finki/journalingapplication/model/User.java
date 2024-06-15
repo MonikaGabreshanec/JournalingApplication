@@ -36,9 +36,8 @@ public class User {
         this.password = password;
 
         listOfNotes=new ArrayList<>();
-
         diaries=new ArrayList<>();
-
+        todos=new ArrayList<>();
     }
 
     public User() {

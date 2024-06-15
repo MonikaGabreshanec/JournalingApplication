@@ -30,4 +30,23 @@ public class ToDoServiceImpl implements ToDoService {
 
         return toDoRepository.save(toDo);
     }
+
+    @Override
+    public void markCompleted(Long id) {
+        ToDo toDo = toDoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid ToDo id: " + id));
+        toDo.setCompleted(!toDo.isCompleted()); // Toggle completion status
+        toDoRepository.save(toDo);
+    }
+
+    @Override
+    public ToDo findById(Long id) {
+        return this.toDoRepository.findById(id).orElseThrow(IllegalAccessError::new);
+    }
+
+    @Override
+    public void deleteCompletedTodos(User user) {
+        List<ToDo> completedTodos = toDoRepository.findByUserAndCompleted(user, true);
+        toDoRepository.deleteAll(completedTodos);
+    }
 }

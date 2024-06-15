@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ToDoRepository extends JpaRepository<ToDo,Long> {
     List<ToDo> findByUser(User user);
+    List<ToDo> findByUserAndCompleted(User user,boolean completed);
 }

@@ -8,4 +8,7 @@ import java.util.List;
 public interface ToDoService {
     List<ToDo> getAllTodos(User user);
     ToDo save(String title,User user);
+    void markCompleted(Long id);
+    ToDo findById(Long id);
+    void deleteCompletedTodos(User user);
 }
