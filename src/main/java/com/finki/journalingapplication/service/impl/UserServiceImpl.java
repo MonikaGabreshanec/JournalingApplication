@@ -21,6 +21,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
+    public User findById(Long id) {
+        return findById(id);
+    }
+
+
 
     @Override
     public User registerAccount(String name, String surname, String username, String password, String rpassword) {
