@@ -22,12 +22,23 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ToDo> todos;
 
+    @OneToMany(mappedBy = "user")
+    private List<Diary> diaries;
+
+
+
+
+
     public User(String name, String surname, String username, String password) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
+
         listOfNotes=new ArrayList<>();
+
+        diaries=new ArrayList<>();
+
     }
 
     public User() {

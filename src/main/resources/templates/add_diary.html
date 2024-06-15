@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{ ${diary != null} ? '/diaries/' + ${diary.id} : '/diaries' }">
+    <label>Content: </label>
+    <textarea  type="textarea"
+               id="content"
+               name="content"
+               th:text="${diary?.content}"
+               th:value="${diary?.content}"
+               rows="5" cols="40" required></textarea><br><br>
+
+    <label>Date: </label>
+    <div>
+        <label for="date">Date</label>
+        <input type="date"
+               id="date"
+               name="date"
+               th:value="${diary?.date}"
+               required>
+    </div>
+    <button type="submit">Add Diary Entry</button>
+</form>
+
+</body>
+</html>
