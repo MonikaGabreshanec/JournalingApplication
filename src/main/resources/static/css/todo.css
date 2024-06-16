@@ -1,6 +1,7 @@
-/* todo.css */
 
-
+h1{
+    padding-top: 20px;
+}
 .add-todo-form {
     display: flex;
     flex-direction: column;
@@ -20,13 +21,14 @@
 .todo-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: left;
     padding: 10px 15px;
     border-bottom: 1px solid #ddd;
 }
 
 .todo-item span {
     margin-right: 10px;
+    padding-left: 10px;
 }
 
 
@@ -46,4 +48,55 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 0px;
+}
+
+
+.round-checkbox {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    appearance: none;
+    border: 2px solid #ccc;
+    outline: none;
+    cursor: pointer;
+}
+
+
+.round-checkbox:checked {
+    background-color: white;
+    border-color: lightslategrey;
+}
+
+.round-checkbox::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform-origin: bottom left;
+    opacity: 0;
+}
+
+.round-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-60%, -90%) rotate(45deg);
+    width: 6px;
+    height: 12px;
+    border: solid mediumseagreen;
+    border-width: 0 2px 2px 0;
+    transform-origin: bottom left;
+    opacity: 1;
+}
+#title{
+
+    width: 400px;
+    text-align: center;
 }
