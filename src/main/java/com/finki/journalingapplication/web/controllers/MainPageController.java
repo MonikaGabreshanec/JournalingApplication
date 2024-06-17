@@ -15,19 +15,5 @@ import java.util.List;
 @RequestMapping
 public class MainPageController {
 
-    private final DiaryService diaryService;
-
-    @GetMapping("/mainpage")
-    private String getDiaryPage(Model model){
-
-
-        List<Diary> diaries = this.diaryService.findAll();
-        model.addAttribute("diaries", diaries);
-        return "mainpage";
-
-    }
-
-
-
 
 }

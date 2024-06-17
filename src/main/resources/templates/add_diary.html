@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/forms.css">
 </head>
-<body>
-<form method="post" th:action="@{ ${diary != null} ? '/diaries/' + ${diary.id} : '/diaries' }">
-    <label>Content: </label>
-    <textarea  type="textarea"
-               id="content"
-               name="content"
-               th:text="${diary?.content}"
-               th:value="${diary?.content}"
-               rows="5" cols="40" required></textarea><br><br>
+<body style="background-image: url('/img/paper.jpg');">
 
-    <label>Date: </label>
-    <div>
-        <label for="date">Date</label>
-        <input type="date"
-               id="date"
-               name="date"
-               th:value="${diary?.date}"
-               required>
-    </div>
-    <button type="submit">Add Diary Entry</button>
+<form class="diary" method="post" th:action="@{ ${diary != null} ? '/diaries/' + ${diary.id} : '/diaries' }">
+    <label for="content">Write about you day:</label>
+    <textarea id="content"
+              name="content"
+              th:text="${diary?.content}"
+              rows="5" cols="40"
+              required></textarea><br><br>
+
+    <label for="date">Date:</label>
+    <input type="date"
+           id="date"
+           name="date"
+           th:value="${diary?.date}"
+           required>
+    <br><br>
+    <button type="submit">Submit</button>
 </form>
 
 </body>

@@ -54,13 +54,13 @@ public class AuthController {
             model.addAttribute("error", e.getMessage());
             return "login";
         }
-        return "redirect:/mainpage";
+        return "redirect:/diaries";
     }
     @PostMapping("/auth-status")
     private String authStatus(HttpSession session) {
         User currentUser = (User) session.getAttribute("User");
         if (currentUser != null) {
-            return "redirect:/mainpage";
+            return "redirect:/diaries";
         }
         return "redirect:/login";
     }
