@@ -89,7 +89,8 @@ button[type="submit"] {
 
 /* Submit Button Hover Effect */
 button[type="submit"]:hover {
-    background-color: #A0522D;
+    background-color:#D2B48C;
+
 }
 
 /* Flexbox Utilities */

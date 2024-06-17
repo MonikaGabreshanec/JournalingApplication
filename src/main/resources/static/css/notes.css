@@ -15,9 +15,6 @@ h1 {
     position: relative;
 }
 
-
-
-/* Adding a decorative underline */
 h1::after {
     content: '';
     display: block;
@@ -27,5 +24,3 @@ h1::after {
     margin: 0.5rem auto 0; /* Center the underline */
     border-radius: 3px; /* Rounded edges for a softer look */
 }
-
-
