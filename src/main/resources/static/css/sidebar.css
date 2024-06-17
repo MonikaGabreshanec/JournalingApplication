@@ -33,7 +33,7 @@ body {
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out;
-    background-color: #f5f0e8;
+    background-color: white;
 }
 
 #sidebar {
@@ -41,7 +41,7 @@ body {
     min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    background-color: #808c6c;
+    background-color: #D2B48C;
     display: flex;
     flex-direction: column;
 }
@@ -62,18 +62,24 @@ body {
     font-size: 1.5rem;
     color: #FFF;
 }
+.toggle-btn svg {
+    font-size: 1.5rem;
+    color: #FFF;
+}
 
 .sidebar-logo {
     margin: auto 0;
 }
 
-.sidebar-logo a {
+.sidebar-logo  {
     color: #FFF;
     font-size: 1.15rem;
     font-weight: 600;
+    margin-top: 15px;
 }
 
-#sidebar:not(.expand) .sidebar-logo,
+
+#sidebar:not(.expand) .sidebar-logo,.sidebar-logged,
 #sidebar:not(.expand) a.sidebar-link span {
     display: none;
 }
@@ -83,6 +89,7 @@ body {
     flex: 1 1 auto;
 }
 
+
 a.sidebar-link {
     padding: .625rem 1.625rem;
     color: #FFF;
@@ -91,7 +98,10 @@ a.sidebar-link {
     white-space: nowrap;
     border-left: 3px solid transparent;
 }
-
+.sidebar-link svg {
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}
 .sidebar-link i {
     font-size: 1.1rem;
     margin-right: .75rem;
@@ -115,6 +125,7 @@ a.sidebar-link:hover {
     min-width: 15rem;
     display: none;
 }
+
 
 #sidebar:not(.expand) .sidebar-item:hover .has-dropdown+.sidebar-dropdown {
     display: block;
