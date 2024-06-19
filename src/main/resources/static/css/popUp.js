@@ -6,20 +6,43 @@ document.addEventListener("DOMContentLoaded", function() {
         var currentDate = new Date();
 
         var timeDiff = dueDate.getTime() - currentDate.getTime();
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        var diffHours = Math.ceil(timeDiff / (1000 * 3600)); // разлика во часови
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // разлика во денови
 
-        if (diffDays === 1) {
+
+        if (diffHours > 1 && diffHours <= 24) {
             var todoItem = element.closest('.todo-item');
             var checkbox = todoItem.querySelector('input[type="checkbox"]');
 
             if (checkbox && !checkbox.checked) {
-                showPopup(todoItem.querySelector('span').textContent.trim());
+                var message = "Task is due in less than 24 hours";
+                showPopup(todoItem.querySelector('span').textContent.trim(), message);
+            }
+        }
+
+        else if (diffHours <= 1) {
+            var todoItem = element.closest('.todo-item');
+            var checkbox = todoItem.querySelector('input[type="checkbox"]');
+
+            if (checkbox && !checkbox.checked) {
+                var message = "Task is due in an hour or less!";
+                showPopup(todoItem.querySelector('span').textContent.trim(), message);
+            }
+        }
+
+        else if (diffDays === 1) {
+            var todoItem = element.closest('.todo-item');
+            var checkbox = todoItem.querySelector('input[type="checkbox"]');
+
+            if (checkbox && !checkbox.checked) {
+                var message = "Task is due tomorrow!";
+                showPopup(todoItem.querySelector('span').textContent.trim(), message);
             }
         }
     });
 });
 
-function showPopup(taskTitle) {
+function showPopup(taskTitle, message) {
     var popup = document.createElement("div");
     popup.classList.add("popup");
 
@@ -35,7 +58,7 @@ function showPopup(taskTitle) {
 
     var popupMessage = document.createElement("p");
     popupMessage.classList.add("card-text");
-    popupMessage.textContent = "is due tomorrow!";
+    popupMessage.textContent = message;
 
     cardBody.appendChild(popupTitle);
     cardBody.appendChild(popupMessage);
