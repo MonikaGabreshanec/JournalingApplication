@@ -12,5 +12,6 @@ public interface NotesService {
     Optional<Notes> save(String title, String description,User user);
     Optional<Notes> edit(Long id, String title, String description,User user);
     void deleteNotes(Long id);
+    public List<String> getNoteSuggestions(String query, User user);
 
 }

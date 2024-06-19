@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -58,6 +59,13 @@ public class NotesController {
     public String delete(@PathVariable Long id) {
         this.notesService.deleteNotes(id);
         return "redirect:/notes";
+    }
+
+    @GetMapping("/notes/suggestions")
+    @ResponseBody
+    public List<String> getSuggestions(@RequestParam String query, HttpSession session) {
+        User currentUser = (User) session.getAttribute("User");
+        return notesService.getNoteSuggestions(query, currentUser);
     }
 
 

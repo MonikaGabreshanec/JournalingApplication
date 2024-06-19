@@ -24,3 +24,18 @@ h1::after {
     margin: 0.5rem auto 0; /* Center the underline */
     border-radius: 3px; /* Rounded edges for a softer look */
 }
+.autocomplete-suggestions {
+    border: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: 300px;
+}
+.autocomplete-suggestion {
+    padding: 8px;
+    cursor: pointer;
+}
+.autocomplete-suggestion:hover {
+    background-color: #f0f0f0;
+}

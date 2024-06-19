@@ -2,28 +2,36 @@ package com.finki.journalingapplication.service.impl;
 
 import com.finki.journalingapplication.model.Notes;
 import com.finki.journalingapplication.model.User;
+import com.finki.journalingapplication.repository.DiaryRepository;
 import com.finki.journalingapplication.repository.NotesRepository;
+import com.finki.journalingapplication.repository.ToDoRepository;
 import com.finki.journalingapplication.service.NotesService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NotesServiceImpl implements NotesService {
     private final NotesRepository notesRepository;
+    private final DiaryRepository diaryRepository;
+    private final ToDoRepository toDoRepository;
 
-    public NotesServiceImpl(NotesRepository notesRepository) {
+    public NotesServiceImpl(NotesRepository notesRepository, DiaryRepository diaryRepository, ToDoRepository toDoRepository) {
         this.notesRepository = notesRepository;
+        this.diaryRepository = diaryRepository;
+        this.toDoRepository = toDoRepository;
     }
 
     @Override
     public void deleteNotes(Long noteId) {
         this.notesRepository.deleteById(noteId);
     }
+
 
     @Override
     public List<Notes> getAllNotes(User user) {
@@ -50,5 +58,28 @@ public class NotesServiceImpl implements NotesService {
         n.setUser(user);
         Notes updatedNote = notesRepository.save(n);
         return Optional.of(updatedNote);
+    }
+    public List<String> getNoteSuggestions(String query, User user) {
+        List<String> notesDescriptions = notesRepository.findDescriptionsByUser(user);
+        List<String> diaryDescriptions = diaryRepository.findDescriptionsByUser(user);
+        List<String> toDoDescriptions = toDoRepository.findDescriptionsByUser(user);
+        List<String> allWords = notesDescriptions.stream()
+                .flatMap(description -> Arrays.stream(description.split("\\s+")))
+                .collect(Collectors.toList());
+
+        allWords.addAll(diaryDescriptions.stream()
+                .flatMap(description -> Arrays.stream(description.split("\\s+")))
+                .collect(Collectors.toList()));
+
+        allWords.addAll(toDoDescriptions.stream()
+                .flatMap(description -> Arrays.stream(description.split("\\s+")))
+                .collect(Collectors.toList()));
+
+        return allWords.stream()
+                .map(word -> word.replaceAll("[^a-zA-Z0-9]", ""))  // remove punctuation
+                .filter(word -> word.toLowerCase().startsWith(query.toLowerCase()))
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
