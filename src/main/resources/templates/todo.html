@@ -131,6 +131,27 @@
         crossorigin="anonymous"></script>
 <script src="/css/script.js"></script>
 <script src="/css/popUp.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the dueDateTime input element
+        var dueDateTimeInput = document.getElementById('dueDateTime');
+
+        // Check if the input value is empty
+        if (!dueDateTimeInput.value) {
+            // Get the current date and time in local time
+            var now = new Date();
+
+            // Format the date and time to 'yyyy-MM-ddTHH:mm' (required by datetime-local input)
+            var formattedDateTime = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2) +
+                'T' + ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+
+            // Set the value of the input field to local time
+            dueDateTimeInput.value = formattedDateTime;
+        }
+    });
+    /*]]>*/
+</script>
 </body>
 
 </html>
