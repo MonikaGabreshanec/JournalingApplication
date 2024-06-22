@@ -78,6 +78,8 @@ public class DairyServiceImpl implements DiaryService {
     public List<Diary> findByUserIdAndDate(Long userId, LocalDate date) {
         return diaryRepository.findByUserIdAndDate(userId, date);
     }
+
+
 }
 
 
