@@ -14,6 +14,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    private String email;
     private String name;
     private String surname;
     private String password;
@@ -29,11 +30,12 @@ public class User {
 
 
 
-    public User(String name, String surname, String username, String password) {
+    public User(String name, String surname, String email,String username, String password) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
+        this.email=email;
 
         listOfNotes=new ArrayList<>();
         diaries=new ArrayList<>();

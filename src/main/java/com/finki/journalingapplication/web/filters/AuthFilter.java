@@ -15,7 +15,9 @@ import java.io.IOException;
                 @WebInitParam(name = "ignore-path3", value = "/homepage"),
                 @WebInitParam(name = "ignore-path4", value = "/auth-status"),
                 @WebInitParam(name = "ignore-path5", value = "/video"),
-                @WebInitParam(name = "ignore-path6", value = "/css")})
+                @WebInitParam(name = "ignore-path6", value = "/css"),
+                @WebInitParam(name = "ignore-path7", value = "/js")})
+
 
 
 public class AuthFilter implements Filter {
@@ -23,13 +25,14 @@ public class AuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        ignorePaths = new String[6];
+        ignorePaths = new String[7];
         ignorePaths[0] = filterConfig.getInitParameter("ignore-path1");
         ignorePaths[1] = filterConfig.getInitParameter("ignore-path2");
         ignorePaths[2] = filterConfig.getInitParameter("ignore-path3");
         ignorePaths[3] = filterConfig.getInitParameter("ignore-path4");
         ignorePaths[4] = filterConfig.getInitParameter("ignore-path5");
         ignorePaths[5] = filterConfig.getInitParameter("ignore-path6");
+        ignorePaths[6] = filterConfig.getInitParameter("ignore-path7");
 
     }
 
@@ -44,7 +47,8 @@ public class AuthFilter implements Filter {
 
         if (user != null || uri.contains(ignorePaths[0]) || uri.contains(ignorePaths[1]) ||
                 uri.contains(ignorePaths[2]) || uri.contains(ignorePaths[3]) ||
-                uri.startsWith(ignorePaths[4]) || uri.startsWith(ignorePaths[5])
+                uri.startsWith(ignorePaths[4]) || uri.startsWith(ignorePaths[5]) ||
+                uri.startsWith(ignorePaths[6])
 
             //|| uri.startsWith("/contact") || uri.startsWith("/about") || uri.startsWith("/submitContactForm")
         ) {

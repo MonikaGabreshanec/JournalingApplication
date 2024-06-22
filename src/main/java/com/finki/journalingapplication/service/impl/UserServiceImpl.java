@@ -7,6 +7,7 @@ import com.finki.journalingapplication.model.exceptionPassword.types.Username0rP
 import com.finki.journalingapplication.model.exceptionPassword.types.UsernameExistsException;
 import com.finki.journalingapplication.model.exceptionPassword.types.UsernameInPasswordException;
 import com.finki.journalingapplication.repository.UserRepository;
+import com.finki.journalingapplication.service.EmailService;
 import com.finki.journalingapplication.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Override
     public User findById(Long id) {
@@ -29,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User registerAccount(String name, String surname, String username, String password, String rpassword) {
+    public User registerAccount(String name, String surname,String email, String username, String password, String rpassword) {
         if (!password.equals(rpassword)) throw new PasswordNotMatchException("The passwords didn't match!");
         PasswordValidator.isValid(password);
         if (userRepository.findUserByUsername(username.strip()).isPresent())
@@ -37,7 +39,14 @@ public class UserServiceImpl implements UserService {
         if (password.toLowerCase().contains(username.toLowerCase()))
             throw new UsernameInPasswordException("Your password shouldn't contain your username!");
 
-        return userRepository.save(new User(name, surname, username, passwordEncoder.encode(password)));
+        User newUser = userRepository.save(new User(name, surname, email, username, passwordEncoder.encode(password)));
+        String subject = "Welcome to Our Application";
+        String body = "Dear " + newUser.getUsername() + ",\n\nWelcome to our application!";
+
+        // Send registration email
+        emailService.sendRegistrationEmail(newUser,subject,body);
+
+        return newUser;
     }
 
     @Override
@@ -55,6 +64,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserByUsername(username).get();
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+        String subject = "Password Change Confirmation";
+        String body = "Dear " + user.getUsername() + ",\n\nYou changed your password successfully";
+
+        // Send registration email
+        emailService.sendRegistrationEmail(user,subject,body);
         return user;
     }
 }
