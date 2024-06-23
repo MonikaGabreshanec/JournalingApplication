@@ -59,21 +59,25 @@
 
     <div class="main p-3" style="background-image: url('/img/paper.jpg'); background-size: cover; background-position: center;">
         <div class="container">
+            <div class="row mb-3">
+                <div class="col-12 text-center">
+                    <h2 class="p1">Hello <span th:text="${user.getName()}"></span>, write about your day!</h2>
+                </div>
+            </div>
             <div class="row">
-                <h2 class="p1 mb-3">Hello <span th:text="${user.getName()}"></span>, write about your day!</h2>
                 <div class="col-md-4">
                     <div class="d-flex flex-column align-items-center mb-3">
-                        <p class="large-icon">Start now
-
+                    <p class="large-icon" style="margin-right: 40px">Record your day in just one tap
                             <a href="/diaries/add">
                                 <i class="bi bi-file-plus large-icon"></i>
                             </a>
                         </p>
-                        <div class="container mt-5">
+                        <div class="container mt-3">
+
+                            <!-- <button type="button" class="btn btn-secondary" style="padding: 10px" onclick="setTitleAndSubmit('My Day')">My Day</button>-->
                             <div class="btn-group">
-                                <button type="button" class="btn btn-secondary" onclick="setTitleAndSubmit('My Day')">Add Diary</button>
                                 <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropdown</span>
+                                    <span class="sr-only">Today I Will Write About</span>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#" onclick="setTitleAndSubmit('My Daily Workout Plan')">My Daily Workout Plan</a>
@@ -83,21 +87,19 @@
                                 </div>
                             </div>
                         </div>
-
                         <form action="/diaries" method="GET" class="f">
-                            <div class="form-group mt-3 text-center">
-                                <label for="selectedDate" class="mt-2">Revisit Your Previous Days</label>
-                                <div class="d-flex justify-content-center align-items-center">
+                            <div class="form-group mt-3 text-center"  style="margin-right: 100px;" >
+                                <label for="selectedDate" class="mt-2 ">Revisit Your Previous Days</label>
+                                <div class="d-flex justify-content-center align-items-center" >
                                     <input type="date" id="selectedDate" name="selectedDate"
                                            value="${selectedDate != null ? #dates.format(selectedDate, 'yyyy-MM-dd') : ''}"
-                                           class="form-control mr-2" style="width: 150px;">
+                                           class="form-control mr-2" style="width: 150px; margin-right: 20px" >
                                     <button type="submit" class="btn btn-primary">Go there</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-
                 <div class="col-md-8">
                     <div th:if="${diaries.size() > 0}">
                         <div th:each="diary : ${diaries}" class="card mb-3">
@@ -105,7 +107,6 @@
                                 <h5 class="card-date" th:text="${#temporals.format(diary.date, 'MMMM dd, yyyy')}"></h5>
                                 <p class="card-title" th:text="${diary.getTitle()}"></p>
                                 <p class="card-text" th:text="${diary.getContent()}"></p>
-
                                 <div class="text-center mt-2">
                                     <form th:method="POST" th:action="@{'/diaries/' + ${diary.getId()} + '/delete'}" class="d-inline">
                                         <button class="btn btn-danger mr-2">
@@ -119,7 +120,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div th:unless="${diaries.size() > 0}">
                         <div class="card mb-3">
                             <div class="card-body">

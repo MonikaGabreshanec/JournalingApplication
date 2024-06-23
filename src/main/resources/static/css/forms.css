@@ -13,10 +13,13 @@ body {
     overflow: hidden;
     margin: 0;
 }
+#description{
+    height: 50%;
+}
 
 form {
     width: 500px;
-    height: 400px;
+    height: 500px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(9px);
@@ -59,3 +62,8 @@ form button:hover {
     background-color: #A0522D;
 }
 
+
+div.autocomplete-suggestion{
+    background-color: white;
+    color: black;
+}
