@@ -35,9 +35,9 @@ public class AuthController {
         return "register";
     }
     @PostMapping("/register")
-    private String registerAccount(Model model, @RequestParam String name, @RequestParam String surname, @RequestParam String username, @RequestParam String password, @RequestParam String rpassword) {
+    private String registerAccount(Model model, @RequestParam String name, @RequestParam String surname, @RequestParam String email,@RequestParam String username, @RequestParam String password, @RequestParam String rpassword) {
         try {
-            userService.registerAccount(name, surname, username, password, rpassword);
+            userService.registerAccount(name, surname,email, username, password, rpassword);
         } catch (PasswordNotMatchException | UsernameExistsException | InvalidPasswordException |
                  UsernameInPasswordException e) {
             model.addAttribute("error", e.getMessage());
