@@ -1,42 +1,42 @@
 document.addEventListener("DOMContentLoaded", function() {
     var dueDates = document.querySelectorAll('.due-date span');
-
+    var currentDate = new Date();
     dueDates.forEach(function(element) {
-        var dueDate = new Date(element.textContent.trim());
-        var currentDate = new Date();
 
         var timeDiff = dueDate.getTime() - currentDate.getTime();
-        var diffHours = Math.ceil(timeDiff / (1000 * 3600)); // разлика во часови
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // разлика во денови
+        var diffMinutes = Math.ceil(timeDiff / (1000 * 60)); // difference in minutes
+        var diffHours = Math.floor(diffMinutes / 60); // difference in hours
+        var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); // difference in days
 
+        var todoItem = element.closest('.todo-item');
+        var checkbox = todoItem.querySelector('input[type="checkbox"]');
+        var taskTitle = todoItem.querySelector('span').textContent.trim();
 
-        if (diffHours > 1 && diffHours <= 24) {
-            var todoItem = element.closest('.todo-item');
-            var checkbox = todoItem.querySelector('input[type="checkbox"]');
+        var message = null; // Initialize message variable
 
-            if (checkbox && !checkbox.checked) {
-                var message = "Task is due in less than 24 hours";
-                showPopup(todoItem.querySelector('span').textContent.trim(), message);
+        if (diffMinutes <= 0) { // Task is overdue
+            message = "Task is overdue!";
+        } else if (diffMinutes > 0 && diffMinutes <= 1440) { // less than or equal to 24 hours
+            if (diffDays === 1) {
+                message = "Task is due tomorrow!";
+            } else if (diffHours === 1) {
+                message = "Task is due in 1 hour!";
+            } else if (diffHours > 1) {
+                message = "Task is due in " + diffHours + " hours!";
+            } else if (diffMinutes === 1) {
+                message = "Task is due in one minute!";
+            } else if (diffMinutes < 60) {
+                message = "Task is due in " + diffMinutes + " minutes!";
             }
         }
 
-        else if (diffHours <= 1) {
-            var todoItem = element.closest('.todo-item');
-            var checkbox = todoItem.querySelector('input[type="checkbox"]');
-
-            if (checkbox && !checkbox.checked) {
-                var message = "Task is due in an hour or less!";
-                showPopup(todoItem.querySelector('span').textContent.trim(), message);
-            }
-        }
-
-        else if (diffDays === 1) {
-            var todoItem = element.closest('.todo-item');
-            var checkbox = todoItem.querySelector('input[type="checkbox"]');
-
-            if (checkbox && !checkbox.checked) {
-                var message = "Task is due tomorrow!";
-                showPopup(todoItem.querySelector('span').textContent.trim(), message);
+        // Show popup only if message is defined
+        if (message && checkbox && !checkbox.checked) {
+            var popupShownKey = "popupShown_" + taskTitle;
+            if (!sessionStorage.getItem(popupShownKey)) {
+                showPopup(taskTitle, message);
+                // Set the flag in sessionStorage
+                sessionStorage.setItem(popupShownKey, "true");
             }
         }
     });

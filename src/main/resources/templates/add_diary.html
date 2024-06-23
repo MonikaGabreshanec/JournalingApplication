@@ -9,11 +9,21 @@
 
 <form class="diary" method="post" th:action="@{ ${diary != null} ? '/diaries/' + ${diary.id} : '/diaries' }">
     <label for="content">Write about you day:</label>
+    <label for="title">Title:</label>
+    <input type="text"
+           id="title"
+           name="title"
+           th:value="${param.title}"
+           required>
+    <br><br>
+
     <textarea id="content"
               name="content"
               th:text="${diary?.content}"
               rows="5" cols="40"
               required></textarea><br><br>
+
+
 
     <label for="date">Date:</label>
     <input type="date"

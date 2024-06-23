@@ -17,12 +17,12 @@ public interface DiaryService {
 
         Diary findById(Long id);
 
-        Diary create(String content, LocalDate date,Long userId);
+        Diary create(String content,String title, LocalDate date,Long userId);
 
 
         Diary delete(Long id);
 
-        Diary edit(Long id, String content, Long user, LocalDate date);
+        Diary edit(Long id, String content,String title, Long user, LocalDate date);
 
         List<Diary> findByUserId(Long userId);
 

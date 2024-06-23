@@ -18,6 +18,8 @@ public class Diary {
     private Long id;
     private String content;
 
+    private String title;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
@@ -27,8 +29,9 @@ public class Diary {
 
     public Diary() {
     }
-    public Diary(String content, LocalDate date, User user) {
+    public Diary(String content,String title, LocalDate date, User user) {
         this.content = content;
+        this.title=title;
         this.date = date;
         this.user = user;
     }

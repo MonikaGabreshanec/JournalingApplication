@@ -46,10 +46,10 @@ public class DairyServiceImpl implements DiaryService {
 
 
     @Override
-    public Diary create(String content, LocalDate date,Long userId) {
+    public Diary create(String content,String title,LocalDate date,Long userId) {
         User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
-        Diary diary = new Diary(content,date,user);
+        Diary diary = new Diary(content,title,date,user);
         return diaryRepository.save(diary);
     }
     @Override
@@ -61,12 +61,13 @@ public class DairyServiceImpl implements DiaryService {
     }
 
     @Override
-    public Diary edit(Long id, String content, Long userId, LocalDate date) {
+    public Diary edit(Long id, String content,String title, Long userId, LocalDate date) {
         Diary diary = findById(id);
         User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
         diary.setContent(content);
+        diary.setTitle(title);
         diary.setDate(date);
         diary.setUser(user);
 
