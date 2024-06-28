@@ -55,12 +55,13 @@ public class DiaryPageController {
         return "add_diary";
     }@PostMapping("/diaries")
     public String create(@RequestParam String content,
+                         @RequestParam String title,
                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                          HttpSession session) {
 
         User sessionUser = (User) session.getAttribute("User");
 
-        diaryService.create(content, date, sessionUser.getId());
+        diaryService.create(content,title,date,sessionUser.getId());
 
         return "redirect:/diaries";
     }
@@ -82,11 +83,12 @@ public class DiaryPageController {
     @PostMapping("/diaries/{id}")
     private String update(@PathVariable Long id,
                           @RequestParam String content,
+                          @RequestParam String title,
                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                           HttpSession session) {
 
         User sessionUser = (User) session.getAttribute("User");
-        diaryService.edit(id,content,sessionUser.getId(),date);
+        diaryService.edit(id,content,title,sessionUser.getId(),date);
         return "redirect:/diaries";
     }
 
