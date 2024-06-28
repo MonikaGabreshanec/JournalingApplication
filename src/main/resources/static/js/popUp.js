@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var dueDates = document.querySelectorAll('.due-date span');
     var currentDate = new Date();
     dueDates.forEach(function(element) {
-
-        var timeDiff = dueDates.getTime() - currentDate.getTime();
+        var dueDate = new Date(element.textContent.trim()); // Convert the text content to a Date object
+        var timeDiff = dueDate.getTime() - currentDate.getTime();
         var diffMinutes = Math.ceil(timeDiff / (1000 * 60)); // difference in minutes
         var diffHours = Math.floor(diffMinutes / 60); // difference in hours
         var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); // difference in days
