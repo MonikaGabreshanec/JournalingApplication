@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
+    console.log("Page loaded. Checking due dates...");
+
     var dueDates = document.querySelectorAll('.due-date span');
     var currentDate = new Date();
     dueDates.forEach(function(element) {
@@ -33,16 +35,21 @@ document.addEventListener("DOMContentLoaded", function() {
         // Show popup only if message is defined
         if (message && checkbox && !checkbox.checked) {
             var popupShownKey = "popupShown_" + taskTitle;
+            console.log("Checking sessionStorage for key:", popupShownKey);
+
             if (!sessionStorage.getItem(popupShownKey)) {
+                console.log("Showing popup for task:", taskTitle);
                 showPopup(taskTitle, message);
-                // Set the flag in sessionStorage
                 sessionStorage.setItem(popupShownKey, "true");
+            } else {
+                console.log("Popup already shown for task:", taskTitle);
             }
         }
     });
 });
 
 function showPopup(taskTitle, message) {
+    console.log("Creating popup for task:", taskTitle);
     var popup = document.createElement("div");
     popup.classList.add("popup");
 
@@ -70,6 +77,7 @@ function showPopup(taskTitle, message) {
     closeButton.innerHTML = "&times;";
     closeButton.addEventListener("click", function() {
         popup.classList.remove("show");
+        console.log("Popup closed for task:", taskTitle);
     });
 
     card.appendChild(cardBody);
@@ -81,5 +89,6 @@ function showPopup(taskTitle, message) {
 
     setTimeout(function() {
         popup.classList.add("show");
+        console.log("Popup shown for task:", taskTitle);
     }, 500);
 }
