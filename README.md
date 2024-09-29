@@ -1,7 +1,10 @@
-- Проект по предметот "Веб Програмирање" <br />
-Моника Габрешанец 211091 <br />
-Данче Јованова 211156 <br />
-- Ментор: <br />
- Ана Тодоровска
+## Journaling Application 
+
+Journaling Application is a web application developed using Spring Boot, designed for personal journaling.
+
+## Authors
+
+* *Monika Gabreshanec*
+* *Danche Jovanova* 
 
 
